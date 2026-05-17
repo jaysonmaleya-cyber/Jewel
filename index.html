@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jewel and Chile's Dinner Invitation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Pinyon+Script&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1e112a 0%, #2d1b4e 30%, #4a2840 70%, #172a21 100%);
+            color: #f5ebe6;
+            font-family: 'Montserrat', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .background-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 30%, rgba(24df, 215, 150, 0.08) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .sparkle {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0;
+            animation: floatSparkle 6s infinite ease-in-out;
+            z-index: 1;
+        }
+
+        @keyframes floatSparkle {
+            0% { transform: translateY(100vh) scale(0); opacity: 0; }
+            50% { opacity: 0.6; }
+            100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+        }
+
+        .container {
+            max-width: 600px;
+            width: 100%;
+            background: rgba(25, 15, 35, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(212, 175, 55, 0.25);
+            border-radius: 24px;
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5), inset 0 0 20px rgba(212, 175, 55, 0.05);
+            position: relative;
+            z-index: 2;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            border: 1px solid rgba(212, 175, 55, 0.1);
+            border-radius: 16px;
+            pointer-events: none;
+        }
+
+        .header-script {
+            font-family: 'Pinyon Script', cursive;
+            font-size: 3.5rem;
+            color: #e6c787;
+            text-shadow: 0 0 10px rgba(230, 199, 135, 0.3);
+            margin-bottom: 5px;
+            line-height: 1;
+        }
+
+        h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 2.2rem;
+            letter-spacing: 4px;
+            color: #f5ebe6;
+            margin-bottom: 30px;
+            font-weight: 400;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 25px auto;
+            width: 60%;
+        }
+
+        .divider .line {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.5), transparent);
+            flex-grow: 1;
+        }
+
+        .divider .diamond {
+            color: #d4af37;
+            font-size: 0.8rem;
+            margin: 0 10px;
+        }
+
+        .details-section {
+            margin-bottom: 35px;
+        }
+
+        .date-time {
+            font-family: 'Cinzel', serif;
+            font-size: 1.3rem;
+            color: #e6c787;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+        }
+
+        .venue {
+            font-size: 1rem;
+            letter-spacing: 1px;
+            color: #dcd1cb;
+            font-weight: 300;
+        }
+
+        .countdown-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            max-width: 320px;
+            margin: 0 auto 35px auto;
+        }
+
+        .countdown-box {
+            background: rgba(212, 175, 55, 0.06);
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            border-radius: 12px;
+            padding: 10px 5px;
+        }
+
+        .countdown-num {
+            font-family: 'Cinzel', serif;
+            font-size: 1.5rem;
+            color: #f5ebe6;
+            display: block;
+        }
+
+        .countdown-label {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #a699b0;
+        }
+
+        .info-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-left: 3px solid #d4af37;
+            padding: 15px 20px;
+            text-align: left;
+            margin-bottom: 30px;
+            border-radius: 0 12px 12px 0;
+        }
+
+        .info-row {
+            margin-bottom: 12px;
+        }
+
+        .info-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .info-label {
+            font-family: 'Cinzel', serif;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            color: #e6c787;
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .info-value {
+            font-size: 0.95rem;
+            color: #f5ebe6;
+            font-weight: 300;
+        }
+
+        .badge {
+            background: rgba(211, 47, 47, 0.15);
+            border: 1px solid rgba(211, 47, 47, 0.4);
+            color: #ff8a80;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            display: inline-block;
+            margin-left: 6px;
+            vertical-align: middle;
+        }
+
+        .gallery-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1rem;
+            letter-spacing: 2px;
+            color: #e6c787;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+        }
+
+        .gallery-wrapper {
+            display: flex;
+            gap: 15px;
+            overflow-x: auto;
+            padding-bottom: 15px;
+            margin-bottom: 35px;
+            scroll-snap-type: x mandatory;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(212, 175, 55, 0.3) transparent;
+        }
+
+        .gallery-wrapper::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .gallery-wrapper::-webkit-scrollbar-thumb {
+            background: rgba(212, 175, 55, 0.3);
+            border-radius: 10px;
+        }
+
+        .gallery-item {
+            flex: 0 0 160px;
+            height: 240px;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            scroll-snap-align: start;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            background: #251733;
+        }
+
+        .rsvp-form {
+            text-align: left;
+        }
+
+        .form-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.1rem;
+            letter-spacing: 2px;
+            color: #e6c787;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: #a699b0;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            padding: 12px 15px;
+            border-radius: 8px;
+            color: #f5ebe6;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #d4af37;
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 8px rgba(212, 175, 55, 0.2);
+        }
+
+        .radio-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 5px;
+        }
+
+        .radio-option {
+            position: relative;
+        }
+
+        .radio-option input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+            z-index: 2;
+        }
+
+        .radio-label {
+            display: block;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .radio-option input[type="radio"]:checked + .radio-label {
+            background: rgba(212, 175, 55, 0.15);
+            border-color: #d4af37;
+            color: #e6c787;
+            font-weight: 500;
+        }
+
+        .submit-btn {
+            width: 100%;
+            background: linear-gradient(90deg, #b59436, #cda745);
+            border: none;
+            padding: 14px;
+            color: #1e112a;
+            font-family: 'Cinzel', serif;
+            font-size: 1rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.3);
+            background: linear-gradient(90deg, #cda745, #dfb855);
+        }
+
+        .submit-btn:active {
+            transform: translateY(1px);
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 30px 20px;
+            }
+            .header-script {
+                font-size: 2.8rem;
+            }
+            h1 {
+                font-size: 1.8rem;
+                letter-spacing: 2px;
+            }
+            .date-time {
+                font-size: 1.1rem;
+            }
+            .gallery-item {
+                flex: 0 0 140px;
+                height: 210px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="background-overlay" id="sparkle-container"></div>
+
+    <div class="container">
+        <p class="header-script">An Evening of Magic by Jewel and Chile</p>
+        <h1>YOU ARE INVITED</h1>
+
+        <div class="divider">
+            <div class="line"></div>
+            <div class="diamond">✦</div>
+            <div class="line"></div>
+        </div>
+
+        <div class="details-section">
+            <p class="date-time">Saturday, May 23, 2026</p>
+            <p class="venue">The Maleya Residence</p>
+        </div>
+
+        <div class="countdown-container">
+            <div class="countdown-box">
+                <span class="countdown-num" id="days">00</span>
+                <span class="countdown-label">Days</span>
+            </div>
+            <div class="countdown-box">
+                <span class="countdown-num" id="hours">00</span>
+                <span class="countdown-label">Hrs</span>
+            </div>
+            <div class="countdown-box">
+                <span class="countdown-num" id="minutes">00</span>
+                <span class="countdown-label">Min</span>
+            </div>
+            <div class="countdown-box">
+                <span class="countdown-num" id="seconds">00</span>
+                <span class="countdown-label">Sec</span>
+            </div>
+        </div>
+
+        <div class="info-card">
+            <div class="info-row">
+                <span class="info-label">Occasion</span>
+                <span class="info-value">An intimate twilight dinner gathering.</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Theme & Palette</span>
+                <span class="info-value">Fairy colors (Ethereal moss greens, twilight purples, sunset oranges, soft pinks & earth tones).</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Dress Code</span>
+                <span class="info-value">Whimsical & Fairy Core chic.<span class="badge">STRICTLY NO JEANS</span></span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Gifts</span>
+                <span class="info-value">Your presence is your present (Gifts are completely optional).</span>
+            </div>
+        </div>
+
+        <p class="gallery-title">Dress Code Lookbook</p>
+        <div class="gallery-wrapper">
+            <div class="gallery-item">
+                <img src="pic1.jpeg" alt="Look 1">
+            </div>
+            <div class="gallery-item">
+                <img src="pic2.jpeg" alt="Look 2">
+            </div>
+            <div class="gallery-item">
+                <img src="pic3.jpeg" alt="Look 3">
+            </div>
+        </div>
+
+        <div class="divider">
+            <div class="line"></div>
+            <div class="diamond">✦</div>
+            <div class="line"></div>
+        </div>
+
+        <form class="rsvp-form" action="https://formspree.io/f/mqejzdwr" method="POST">
+    <p class="form-title">Kindly RSVP</p>
+    
+    <div class="input-group">
+        <label for="guestName">Your Full Name</label>
+        <input type="text" id="guestName" name="name" required placeholder="Enter your name">
+    </div>
+
+    <div class="input-group">
+        <label>Will you attend?</label>
+        <div class="radio-group">
+            <div class="radio-option">
+                <input type="radio" id="rsvpYes" name="attendance" value="Joyfully Accept" checked>
+                <span class="radio-label">Joyfully Accept</span>
+            </div>
+            <div class="radio-option">
+                <input type="radio" id="rsvpNo" name="attendance" value="Regretfully Decline">
+                <span class="radio-label">Regretfully Decline</span>
+            </div>
+        </div>
+    </div>
+
+    <button type="submit" class="submit-btn">SEND RESPONSE</button>
+</form>
+    </div>
+
+    <script>
+        function createSparkles() {
+            const container = document.getElementById('sparkle-container');
+            const sparkleCount = 30;
+            
+            for (let i = 0; i < sparkleCount; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.classList.add('sparkle');
+                
+                const size = Math.random() * 4 + 2;
+                sparkle.style.width = `${size}px`;
+                sparkle.style.height = `${size}px`;
+                
+                sparkle.style.left = `${Math.random() * 100}%`;
+                
+                const delay = Math.random() * 6;
+                const duration = Math.random() * 4 + 4;
+                sparkle.style.animationDelay = `${delay}s`;
+                sparkle.style.animationDuration = `${duration}s`;
+                
+                if(Math.random() > 0.5) {
+                    sparkle.style.background = 'radial-gradient(circle, #e6c787 0%, transparent 100%)';
+                    sparkle.style.boxShadow = '0 0 10px #e6c787';
+                } else {
+                    sparkle.style.background = 'radial-gradient(circle, #ffffff 0%, transparent 100%)';
+                    sparkle.style.boxShadow = '0 0 8px #ffffff';
+                }
+                
+                container.appendChild(sparkle);
+            }
+        }
+
+        const targetDate = new Date('May 23, 2026 19:00:00').getTime();
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const difference = targetDate - now;
+
+            if (difference <= 0) {
+                document.querySelector('.countdown-container').style.display = 'none';
+                return;
+            }
+
+            const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+            document.getElementById('days').innerText = days < 10 ? '0' + days : days;
+            document.getElementById('hours').innerText = hours < 10 ? '0' + hours : hours;
+            document.getElementById('minutes').innerText = minutes < 10 ? '0' + minutes : minutes;
+            document.getElementById('seconds').innerText = seconds < 10 ? '0' + seconds : seconds;
+        }
+
+        function handleRSVP(event) {
+            event.preventDefault();
+            const name = document.getElementById('guestName').value;
+            const attendance = document.querySelector('input[name="attendance"]:checked').value;
+            
+            if (attendance === 'yes') {
+                alert(`Thank you, ${name}! Your response has been saved. We look forward to seeing you!`);
+            } else {
+                alert(`Thank you for letting us know, ${name}. You will be missed!`);
+            }
+        }
+
+        createSparkles();
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+    </script>
+</body>
+</html>
